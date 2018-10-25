@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Transaction {
+	
 	private double dinheiroDado;
+	
 	private double total;
+	
 	private List<Integer> notas =  new ArrayList<Integer>();
 	private List<Integer> moedas =  new ArrayList<Integer>();
 	
@@ -20,17 +23,23 @@ public class Transaction {
 		moedas.add(5);
 		moedas.add(1);
 		
-		if(total < dinheiroDado){
+		if(total > dinheiroDado){
 			System.err.println("Quantia insuficiente!");
-			throw new Exception();
+			throw new Exception("Quantia insuficiente");
 		}
 		
-		this.total = total;
+		if(total < 0) {
+			System.err.println("Total Negativo - Valor incorreto");
+			throw new Exception("Total Negativo - Valor incorreto");
+		} else {
+			this.total = total;
+		}
+		
 		this.dinheiroDado = dinheiroDado;
 	}
 	
 	public double retornaTroco(){
-		return total - dinheiroDado;
+		return dinheiroDado - total;
 	}
 	
 	public void imprimeCedulas(){

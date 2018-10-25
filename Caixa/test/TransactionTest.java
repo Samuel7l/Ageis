@@ -11,8 +11,8 @@ public class TransactionTest {
 	
 	@Test
 	public void testRetornaTroco() throws Exception{
-		dinheiroDado = 250;
-		total = 251;
+		dinheiroDado = 251;
+		total = 250;
 		Transaction transaction = new Transaction(total, dinheiroDado);
 		assertThat(transaction.retornaTroco(), CoreMatchers.equalTo(1.0));
 	}
@@ -23,12 +23,22 @@ public class TransactionTest {
 		total = 250.5;
 		Transaction transaction = new Transaction(total, dinheiroDado);
 		transaction.imprimeCedulas();
+		assertThat(transaction.retornaTroco(), CoreMatchers.equalTo(0.5));
+
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testImprimeCasoNegativo() throws Exception{
 		dinheiroDado = 249;
 		total = 250;
+		Transaction transaction = new Transaction(total, dinheiroDado);
+		transaction.imprimeCedulas();
+	}
+	
+	@Test(expected = Exception.class)
+	public void testImprimeContaNegativa() throws Exception{
+		dinheiroDado = 249;
+		total = -250;
 		Transaction transaction = new Transaction(total, dinheiroDado);
 		transaction.imprimeCedulas();
 	}
